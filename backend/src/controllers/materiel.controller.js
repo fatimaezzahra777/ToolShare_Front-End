@@ -1,0 +1,27 @@
+const materielService = require('../services/materiel.service');
+
+async function create(req, res) {
+  const materiel = await materielService.create(req.user, req.body);
+  res.status(201).json({ materiel });
+}
+
+async function list(req, res) {
+  res.json(await materielService.list(req.user, req.query));
+}
+
+async function getById(req, res) {
+  res.json({ materiel: await materielService.getById(req.user, req.params.id) });
+}
+
+async function declareUnavailable(req, res) {
+  res.json({ materiel: await materielService.declareUnavailable(req.user, req.params.id) });
+}
+
+async function putBackInService(req, res) {
+  res.json({ materiel: await materielService.putBackInService(req.user, req.params.id) });
+}
+
+async function update(req, res) { res.json({ materiel: await materielService.update(req.user, req.params.id, req.body) }); }
+async function deactivate(req, res) { res.json({ materiel: await materielService.deactivate(req.user, req.params.id) }); }
+
+module.exports = { create, list, getById, update, deactivate, declareUnavailable, putBackInService };
